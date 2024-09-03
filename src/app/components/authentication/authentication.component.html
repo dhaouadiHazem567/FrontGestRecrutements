@@ -1,0 +1,39 @@
+
+<div class="container d-flex justify-content-center align-items-center min-vh-100">
+  <div class="row justify-content-center">
+    <div class="col-12">
+      <div class="card shadow-lg p-5 custom-card">
+        <div class="card-body">
+          <h3 class="card-title text-center mb-4">Login</h3>
+          <form #myForm="ngForm">
+            <div class="mb-4">
+              <label class="form-label">Username</label>
+              <input type="text" name="username" class="form-control" [(ngModel)]="userAuthentication.username" required #username="ngModel">
+              <div *ngIf="username.hasError('required') && username.touched" class="text-danger">
+                Username is required
+              </div>
+            </div>
+            <div class="mb-4">
+              <label class="form-label">Password</label>
+              <input type="password" name="password" class="form-control" [(ngModel)]="userAuthentication.password" required #password="ngModel">
+              <div *ngIf="password.hasError('required') && password.touched" class="text-danger">
+                Password is required
+              </div>
+            </div>
+            <div class="d-grid">
+              <button type="submit" class="btn btn-primary btn-lg" [disabled]="myForm.invalid" (click)="onLogin()">Log In</button>
+            </div>
+          </form>
+          <div class="text-center mt-3">
+            <a routerLink="/forgot-password">Forgot Password?</a>
+          </div>
+
+          <div class="text-center mt-3">
+            <a routerLink="/create-candidate">Create account?</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

@@ -1,0 +1,153 @@
+/* Styles pour la carte utilisateur */
+.card {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.card-header {
+  background-color: #4CAF50; /* Vert */
+  color: white;
+  border-bottom: 1px solid #ddd;
+  padding: 15px;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+}
+
+.card-body {
+  padding: 20px;
+}
+
+/* Styles pour les éléments de la liste de description */
+.dl dt {
+  font-weight: bold;
+}
+
+.dl dd {
+  margin-bottom: 10px;
+}
+
+/* Styles pour les boutons dans le footer des modaux */
+
+/* Styles pour le bouton Close */
+.btn-secondary {
+  background-color: #f0ad4e; /* Orange */
+  border-color: #f0ad4e;
+  color: white;
+  font-weight: bold;
+  padding: 10px 20px;
+  border-radius: 5px;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.btn-secondary:hover {
+  background-color: #ec971f; /* Orange plus foncé */
+  transform: translateY(-2px);
+}
+
+/* Styles pour le bouton Reset */
+.btn-danger {
+  background-color: #d9534f; /* Rouge */
+  border-color: #d9534f;
+  color: white;
+  font-weight: bold;
+  padding: 10px 20px;
+  border-radius: 5px;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.btn-danger:hover {
+  background-color: #c9302c; /* Rouge plus foncé */
+  transform: translateY(-2px);
+}
+
+/* Styles pour le bouton Update User */
+.btn-primary {
+  background-color: #4CAF50; /* Vert */
+  border-color: #4CAF50;
+  color: white;
+  font-weight: bold;
+  padding: 10px 20px;
+  border-radius: 5px;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.btn-primary:hover {
+  background-color: #45a049; /* Vert plus foncé */
+  transform: translateY(-2px);
+}
+
+/* Espacement entre les boutons dans le footer du modal */
+.modal-footer .btn {
+  margin-left: 10px;
+}
+
+.btn-warning {
+  background-color: #ffc107; /* Jaune */
+  border-color: #ffc107;
+  color: black;
+  font-weight: bold;
+  padding: 10px 20px;
+  border-radius: 5px;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.btn-warning:hover {
+  background-color: #e0a800; /* Jaune plus foncé */
+  transform: translateY(-2px);
+}
+
+/* Styles pour les modaux */
+.modal-content {
+  border-radius: 8px;
+}
+
+.modal-header {
+  background-color: #4CAF50; /* Vert */
+  color: white;
+  border-bottom: 1px solid #ddd;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+}
+
+.modal-body {
+  padding: 20px;
+}
+
+.modal-footer {
+  border-top: 1px solid #ddd;
+}
+
+/* Styles pour les champs de formulaire dans les modaux */
+form {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-label {
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.form-control,
+.form-select {
+  border-radius: 5px;
+  border: 1px solid #ced4da; /* Bordure neutre */
+}
+
+.form-control:focus,
+.form-select:focus {
+  border-color: #4CAF50; /* Bordure verte au focus */
+  box-shadow: 0 0 0 0.2rem rgba(76, 175, 80, 0.25); /* Ombre verte au focus */
+}
+
+/* Styles pour les messages d'erreur */
+.text-danger {
+  font-size: 0.875rem; /* Taille de police réduite */
+  color: #dc3545; /* Rouge pour les messages d'erreur */
+}
+
+/* Styles pour les champs désactivés */
+input[disabled] {
+  background-color: #e9ecef; /* Couleur de fond pour les champs désactivés */
+}

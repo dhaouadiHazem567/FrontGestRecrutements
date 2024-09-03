@@ -1,0 +1,214 @@
+<!-- user-management.component.html -->
+<div class="container">
+  <h1>Welcome {{currentUser.firstname}} {{currentUser.lastname}}</h1>
+  <h5>You can manage users</h5>
+</div>
+
+<div class="container">
+  <!-- Button trigger modal -->
+  <div class="text-end mb-3">
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addUserModal">
+      + Add User
+    </button>
+  </div>
+  <!-- Table des utilisateurs -->
+
+  <div>
+    <div class="p-inputgroup">
+  <span class="p-inputgroup-addon">
+    <i class="pi pi-search"></i>
+  </span>
+      <div class="mb-6">
+        <select id="searchField" class="form-select" [(ngModel)]="selectedSearchField">
+          <option *ngFor="let option of searchOptions" [value]="option.value">
+            {{ option.label }}
+          </option>
+        </select>
+      </div>
+      <input pInputText
+             type="text"
+             [(ngModel)]="searchTerm"
+             (input)="filterUsers()"
+             placeholder="Search by {{selectedSearchField}}...">
+    </div>
+
+    <p-table [value]="filteredUsers" [paginator]="true" [rows]="10" [rowsPerPageOptions]="[5,10,20]">
+      <ng-template pTemplate="header">
+        <tr>
+          <th pSortableColumn="firstname">Firstname <p-sortIcon field="firstname"></p-sortIcon></th>
+          <th pSortableColumn="lastname">Lastname <p-sortIcon field="lastname"></p-sortIcon></th>
+          <th pSortableColumn="phone">Phone <p-sortIcon field="phone"></p-sortIcon></th>
+          <th pSortableColumn="gender">Gender <p-sortIcon field="gender"></p-sortIcon></th>
+          <th pSortableColumn="birthdate">Birthdate <p-sortIcon field="birthdate"></p-sortIcon></th>
+          <th pSortableColumn="username">Username <p-sortIcon field="username"></p-sortIcon></th>
+          <th pSortableColumn="email">Email <p-sortIcon field="email"></p-sortIcon></th>
+          <th>Role</th>
+          <th>Action</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-user>
+        <tr>
+          <td>{{ user.firstname }}</td>
+          <td>{{ user.lastname }}</td>
+          <td>{{ user.phone }}</td>
+          <td>{{ user.gender }}</td>
+          <td>{{ user.birthdate | date }}</td>
+          <td>{{ user.username }}</td>
+          <td>{{ user.email }}</td>
+          <td>
+          <span *ngFor="let role of user.roles">
+            {{ role.roleName.replace('ROLE_', '')}}
+          </span>
+          </td>
+          <td>
+            <div class="d-flex justify-content-start">
+            <button class="btn btn-warning btn-sm ms" data-bs-toggle="modal" data-bs-target="#editRoleModal" (click)="editUser(user)">Edit</button>
+            <button class="btn btn-danger btn-sm ms-2" (click)="deleteUser(user.id)">Delete</button>
+            </div>
+          </td>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="emptymessage">
+        <tr>
+          <td colspan="9">No users found.</td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+
+
+</div>
+
+<!-- Modal -->
+<!-- id="addUserModal , aria-labelledby="addUserModalLabel" -->
+<div class="modal fade" id="addUserModal" tabindex="-1" aria-labelledby="addUserModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg"> <!-- Modal large -->
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="addUserModalLabel">Create New User</h5>
+        <button type="button" class="btn-close" aria-label="Close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        <form #userForm="ngForm" (ngSubmit)="addUser(userForm)">
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <label for="firstname" class="form-label">First Name:</label>
+              <input type="text" id="firstname" class="form-control" [(ngModel)]="user.firstname" name="firstname" #firstname="ngModel" required>
+              <div *ngIf="firstname.hasError('required') && firstname.touched" class="text-danger">
+                Firstname is required
+              </div>
+            </div>
+            <div class="col-md-6 mb-3">
+              <label for="lastname" class="form-label">Last Name:</label>
+              <input type="text" id="lastname" class="form-control" [(ngModel)]="user.lastname" name="lastname" #lastname="ngModel" required>
+              <div *ngIf="lastname.hasError('required') && lastname.touched" class="text-danger">
+                Lastname is required
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <label for="phone" class="form-label">Phone:</label>
+              <input type="text" id="phone" class="form-control" [(ngModel)]="user.phone" name="phone" #phone="ngModel" required pattern="^[0-9]{8}$">
+              <div *ngIf="phone.hasError('required') && phone.touched" class="text-danger">
+                Phone is required
+              </div>
+              <div *ngIf="phone.hasError('pattern') && phone.touched" class="text-danger">Phone must be exactly 8 digits</div>
+            </div>
+            <div class="col-md-6 mb-3">
+              <label for="gender" class="form-label">Gender:</label>
+              <select id="gender" class="form-select" [(ngModel)]="user.gender" name="gender">
+                <option value="" disabled>Select gender</option>
+                <option value="MALE">Male</option>
+                <option value="FEMALE">Female</option>
+              </select>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <label for="birthdate" class="form-label">Birthdate:</label>
+              <input type="date" id="birthdate" class="form-control" [(ngModel)]="user.birthdate" name="birthdate" #birthdate="ngModel">
+              <div *ngIf="!user.birthdate" class="text-danger">Birthdate is required</div>
+            </div>
+            <div class="col-md-6 mb-3">
+              <label for="username" class="form-label">Username:</label>
+              <input type="text" id="username" class="form-control" [(ngModel)]="user.username" name="username" #username="ngModel" required>
+              <div *ngIf="username.hasError('required') && username.touched" class="text-danger">Username is required</div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <label for="email" class="form-label">Email:</label>
+              <input type="email" id="email" class="form-control" [(ngModel)]="user.email" name="email" #email="ngModel" required>
+              <div *ngIf="email.hasError('required') && email.touched" class="text-danger">Email is required</div>
+              <div *ngIf="!isValidEmail(user.email) && email.touched" class="text-danger">Email must be a valid email</div>
+            </div>
+            <div class="col-md-6 mb-3">
+              <label for="password" class="form-label">Password:</label>
+              <input type="password" id="password" class="form-control" [(ngModel)]="user.password" name="password" #password="ngModel" required>
+              <div *ngIf="password.hasError('required') && password.touched" class="text-danger">
+                Password is required
+              </div>
+              <div *ngIf="!isValidPassword(user.password) && password.touched" class="text-danger">
+                Password must be at least 10 characters long, contain at least 1 number and 1 special character.
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <label for="role" class="form-label">Role:</label>
+              <select id="role" class="form-select" [(ngModel)]="roleName" name="role">
+                <option value="" disabled>Select role</option>
+                <option value="ROLE_ADMIN">Admin</option>
+                <option value="ROLE_HR_MANAGER">HR Manager</option>
+              </select>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-danger" (click)="onReset(userForm)">Reset</button>
+            <button type="submit" class="btn btn-primary" [disabled]="!userForm.valid">Create User</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="editRoleModal" tabindex="-1" aria-labelledby="editRoleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg"> <!-- Modal large -->
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="editRoleModalLabel">Edit User Role</h5>
+        <button type="button" class="btn-close" aria-label="Close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        <form #roleForm="ngForm">
+          <div class="row">
+            <!-- ID (dissimulé pour édition) -->
+            <div class="col-md-12 mb-3">
+              <label class="form-label">Username:</label>
+              <input type="text" class="form-control" name="usernameEdit" [(ngModel)]="selectedUser.username" disabled>
+            </div>
+          </div>
+          <div class="row">
+            <!-- Role -->
+            <div class="col-md-12 mb-3">
+              <label class="form-label">Role:</label>
+              <select class="form-select" name="role" [(ngModel)]="selectedUserRole">
+                <option value="" disabled>Select role</option>
+                <option value="ROLE_ADMIN">Admin</option>
+                <option value="ROLE_HR_MANAGER">HR Manager</option>
+                <!-- Ajoutez d'autres rôles si nécessaire -->
+              </select>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-primary" [disabled]="!roleForm.valid" (click)="editUserRole()">Update Role</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

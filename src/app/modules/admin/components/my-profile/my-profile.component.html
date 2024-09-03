@@ -1,0 +1,182 @@
+<div class="container mt-5">
+  <div class="row">
+    <div class="col-md-6 offset-md-3">
+      <div class="card">
+        <div class="card-header">
+          <h4>My Profile</h4>
+        </div>
+        <div class="card-body">
+          <dl class="row">
+            <dt class="col-sm-3">ID</dt>
+            <dd class="col-sm-9">{{ user.id }}</dd>
+
+            <dt class="col-sm-3">First Name</dt>
+            <dd class="col-sm-9">{{ user.firstname }}</dd>
+
+            <dt class="col-sm-3">Last Name</dt>
+            <dd class="col-sm-9">{{ user.lastname }}</dd>
+
+            <dt class="col-sm-3">Phone</dt>
+            <dd class="col-sm-9">{{ user.phone }}</dd>
+
+            <dt class="col-sm-3">Gender</dt>
+            <dd class="col-sm-9">{{ user.gender }}</dd>
+
+            <dt class="col-sm-3">Birthdate</dt>
+            <dd class="col-sm-9">{{ user.birthdate | date }}</dd>
+
+            <dt class="col-sm-3">Username</dt>
+            <dd class="col-sm-9">{{ user.username }}</dd>
+
+            <dt class="col-sm-3">Email</dt>
+            <dd class="col-sm-9">{{ user.email }}</dd>
+
+            <dt class="col-sm-3">Role</dt>
+            <dd class="col-sm-9">{{ user.roles[0].roleName }}</dd>
+
+            <dt class="col-sm-3">Created At</dt>
+            <dd class="col-sm-9">{{ user.createdAt | date:'short' }}</dd>
+
+            <dt class="col-sm-3">Updated At</dt>
+            <dd class="col-sm-9">{{ user.updatedAt | date:'short' }}</dd>
+          </dl>
+          <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editUserModal">Edit</button>&nbsp;&nbsp;
+          <button class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#resetPasswordModal">Reset password</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal pour la réinitialisation du mot de passe -->
+<div class="modal fade" id="resetPasswordModal" tabindex="-1" aria-labelledby="resetPasswordModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="resetPasswordModalLabel">Reset Password</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form #passwordForm="ngForm">
+          <div class="mb-3">
+            <label for="oldPassword" class="form-label">Old Password</label>
+            <input type="password" id="oldPassword" class="form-control" [(ngModel)]="oldPassword" name="oldPassword" required>
+          </div>
+          <div class="mb-3">
+            <label for="newPassword" class="form-label">New Password</label>
+            <input type="password" id="newPassword" class="form-control" [(ngModel)]="newPassword" name="newPassword" #newpassword="ngModel" required>
+            <div *ngIf="newpassword.hasError('required') && newpassword.touched" class="text-danger">
+              Password is required
+            </div>
+            <div *ngIf="!isValidPassword(newPassword) && newpassword.touched" class="text-danger">
+              Password must be at least 10 characters long, contain at least 1 number and 1 special character.
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-primary" (click)="resetPassword()">Submit</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- Modal pour l'édition du profil utilisateur -->
+<div class="modal fade" id="editUserModal" tabindex="-1" aria-labelledby="editUserModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg"> <!-- Modal large -->
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="editUserModalLabel">Edit User</h5>
+        <button type="button" class="btn-close" aria-label="Close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        <form #userForm="ngForm">
+          <div class="row">
+            <!-- ID (disabled) -->
+            <div class="col-md-6 mb-3">
+              <label for="id" class="form-label">ID:</label>
+              <input type="text" id="id" class="form-control" [(ngModel)]="updateUser.id" name="id" #id="ngModel" disabled>
+            </div>
+
+            <!-- First Name -->
+            <div class="col-md-6 mb-3">
+              <label for="firstname" class="form-label">First Name:</label>
+              <input type="text" id="firstname" class="form-control" [(ngModel)]="updateUser.firstname" name="firstname" #firstname="ngModel" required>
+              <div *ngIf="firstname.hasError('required') && firstname.touched" class="text-danger">
+                Firstname is required
+              </div>
+            </div>
+
+            <!-- Last Name -->
+            <div class="col-md-6 mb-3">
+              <label for="lastname" class="form-label">Last Name:</label>
+              <input type="text" id="lastname" class="form-control" [(ngModel)]="updateUser.lastname" name="lastname" #lastname="ngModel" required>
+              <div *ngIf="lastname.hasError('required') && lastname.touched" class="text-danger">
+                Lastname is required
+              </div>
+            </div>
+
+            <!-- Phone -->
+            <div class="col-md-6 mb-3">
+              <label for="phone" class="form-label">Phone:</label>
+              <input type="text" id="phone" class="form-control" [(ngModel)]="updateUser.phone" name="phone" #phone="ngModel" required pattern="^[0-9]{8}$">
+              <div *ngIf="phone.hasError('required') && phone.touched" class="text-danger">
+                Phone is required
+              </div>
+              <div *ngIf="phone.hasError('pattern') && phone.touched" class="text-danger">Phone must be exactly 8 digits</div>
+            </div>
+
+            <!-- Gender -->
+            <div class="col-md-6 mb-3">
+              <label for="gender" class="form-label">Gender:</label>
+              <select id="gender" class="form-select" [(ngModel)]="updateUser.gender" name="gender">
+                <option value="" disabled>Select gender</option>
+                <option value="MALE">Male</option>
+                <option value="FEMALE">Female</option>
+              </select>
+            </div>
+
+            <!-- Birthdate -->
+            <div class="col-md-6 mb-3">
+              <label for="birthdate" class="form-label">Birthdate:</label>
+              <input type="date" id="birthdate" class="form-control" [(ngModel)]="updateUser.birthdate" name="birthdate" #birthdate="ngModel" [ngModel]="user.birthdate | date:'yyyy-MM-dd'">
+              <div *ngIf="!user.birthdate && birthdate.touched" class="text-danger">Birthdate is required</div>
+            </div>
+
+            <!-- Username -->
+            <div class="col-md-6 mb-3">
+              <label for="username" class="form-label">Username:</label>
+              <input type="text" id="username" class="form-control" [(ngModel)]="updateUser.username" name="username" #username="ngModel" required>
+              <div *ngIf="username.hasError('required') && username.touched" class="text-danger">Username is required</div>
+            </div>
+
+            <!-- Email -->
+            <div class="col-md-6 mb-3">
+              <label for="email" class="form-label">Email:</label>
+              <input type="email" id="email" class="form-control" [(ngModel)]="updateUser.email" name="email" #email="ngModel" required>
+              <div *ngIf="email.hasError('required') && email.touched" class="text-danger">Email is required</div>
+              <div *ngIf="!isValidEmail(user.email) && email.touched" class="text-danger">
+                Email must be a valid email
+              </div>
+            </div>
+
+            <!-- Created At (disabled) -->
+            <div class="col-md-6 mb-3">
+              <label for="createdAt" class="form-label">Created At:</label>
+              <input type="text" id="createdAt" class="form-control" [(ngModel)]="updateUser.createdAt" name="createdAt" #createdAt="ngModel" disabled>
+            </div>
+          </div>
+
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-danger" (click)="resetForm()">Reset</button>
+            <button type="submit" class="btn btn-primary" [disabled]="!userForm.valid" (click)="editProfile()">Update User</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+

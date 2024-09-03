@@ -1,0 +1,283 @@
+<div class="container">
+  <h1>Welcome {{currentUser.firstname}} {{currentUser.lastname}}</h1>
+  <p>You can manage your offers</p>
+</div>
+
+<div class="container">
+  <div class="text-end mb-3">
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addOfferModal">
+      + Add Offer
+    </button>
+  </div>
+</div>
+
+<div class="container mt-5">
+  <div class="row">
+    <div class="col-md-8 offset-md-2">
+      <div *ngFor="let offer of offers" class="card mb-3">
+        <div class="card-header">
+          <h4>{{ offer.title }}</h4>
+        </div>
+        <div class="card-body">
+          <dl class="row">
+            <dt class="col-sm-3">Mission</dt>
+            <dd class="col-sm-9">{{ offer.mission }}</dd>
+
+            <dt class="col-sm-3">Experience</dt>
+            <dd class="col-sm-9">{{ offer.experience }}</dd>
+
+            <dt class="col-sm-3">Diploma</dt>
+            <dd class="col-sm-9">{{ offer.diploma }}</dd>
+
+            <dt class="col-sm-3">Skills</dt>
+            <dd class="col-sm-9">{{ offer.skills }}</dd>
+
+            <dt class="col-sm-3">Requirement</dt>
+            <dd class="col-sm-9">{{ offer.requirement }}</dd>
+
+            <dt class="col-sm-3">Contract Type</dt>
+            <dd class="col-sm-9">{{ offer.contractType }}</dd>
+
+            <dt class="col-sm-3">Status</dt>
+            <dd class="col-sm-9">{{ offer.offreStatus }}</dd>
+
+            <dt class="col-sm-3">Created At</dt>
+            <dd class="col-sm-9">{{ offer.createdAt | date:'short' }}</dd>
+
+            <dt class="col-sm-3">Updated At</dt>
+            <dd class="col-sm-9">{{ offer.updatedAt | date:'short' }}</dd>
+          </dl>
+          <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editOfferModal" (click)="editOffer(offer)">Edit</button>&nbsp;&nbsp;
+          <button class="btn btn-danger" (click)="deleteOffer(offer.id)">Delete</button>&nbsp;&nbsp;
+          <button class="btn btn-secondary" (click)="getApplicationsByOffer(offer.id)" data-bs-toggle="modal" data-bs-target="#applicationsListModal">Applications</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="addOfferModal" tabindex="-1" aria-labelledby="addOfferModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg"> <!-- Modal large -->
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="addOfferModalLabel">Create New Offer</h5>
+        <button type="button" class="btn-close" aria-label="Close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        <form #offerForm="ngForm">
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <label for="title" class="form-label">Title:</label>
+              <input type="text" id="title" class="form-control" [(ngModel)]="offer.title" name="title" #title="ngModel" required>
+              <div *ngIf="title.hasError('required') && title.touched" class="text-danger">
+                Title is required
+              </div>
+            </div>
+            <div class="col-md-6 mb-3">
+              <label for="mission" class="form-label">Mission:</label>
+              <input type="text" id="mission" class="form-control" [(ngModel)]="offer.mission" name="mission" #mission="ngModel" required>
+              <div *ngIf="mission.hasError('required') && mission.touched" class="text-danger">
+                Mission is required
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <label for="experience" class="form-label">Experience:</label>
+              <input type="text" id="experience" class="form-control" [(ngModel)]="offer.experience" name="experience" #experience="ngModel" required>
+              <div *ngIf="experience.hasError('required') && experience.touched" class="text-danger">
+                Experience is required
+              </div>
+            </div>
+            <div class="col-md-6 mb-3">
+              <label for="diploma" class="form-label">Diploma:</label>
+              <input type="text" id="diploma" class="form-control" [(ngModel)]="offer.diploma" name="diploma" #diploma="ngModel" required>
+              <div *ngIf="diploma.hasError('required') && diploma.touched" class="text-danger">
+                Diploma is required
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <label for="skills" class="form-label">Skills:</label>
+              <input type="text" id="skills" class="form-control" [(ngModel)]="offer.skills" name="skills" #skills="ngModel" required>
+              <div *ngIf="skills.hasError('required') && skills.touched" class="text-danger">
+                Skills are required
+              </div>
+            </div>
+            <div class="col-md-6 mb-3">
+              <label for="requirement" class="form-label">Requirement:</label>
+              <input type="text" id="requirement" class="form-control" [(ngModel)]="offer.requirement" name="requirement" #requirement="ngModel" required>
+              <div *ngIf="requirement.hasError('required') && requirement.touched" class="text-danger">
+                Requirement is required
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <label for="contractType" class="form-label">Contract Type:</label>
+              <select id="contractType" class="form-select" [(ngModel)]="offer.contractType" name="contractType" required>
+                <option value="" disabled>Select contract type</option>
+                <option *ngFor="let type of contractTypes" [value]="type">{{type}}</option>
+              </select>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-danger" (click)="onReset()">Reset</button>
+            <button type="submit" class="btn btn-primary" [disabled]="!offerForm.valid" (click)="createOffer()">Create Offer</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="modal fade" id="editOfferModal" tabindex="-1" aria-labelledby="editOfferModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="editOfferModalLabel">Edit Offer</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form #editOfferForm="ngForm">
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <label for="id" class="form-label">Offer ID:</label>
+              <input type="text" id="id" class="form-control" [(ngModel)]="selectedOffer.id" name="id" disabled>
+            </div>
+            <div class="col-md-6 mb-3">
+              <label class="form-label">Title:</label>
+              <input type="text" class="form-control" [(ngModel)]="selectedOffer.title" name="title" required #editTitle="ngModel">
+              <div *ngIf="editTitle.hasError('required') && editTitle.touched" class="text-danger">
+                Title is required
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <label class="form-label">Mission:</label>
+              <input type="text" class="form-control" [(ngModel)]="selectedOffer.mission" name="mission" required #editMission="ngModel">
+              <div *ngIf="editMission.hasError('required') && editMission.touched" class="text-danger">
+                Mission is required
+              </div>
+            </div>
+            <div class="col-md-6 mb-3">
+              <label class="form-label">Experience:</label>
+              <input type="text" class="form-control" [(ngModel)]="selectedOffer.experience" name="experience" required #editExperience="ngModel">
+              <div *ngIf="editExperience.hasError('required') && editExperience.touched" class="text-danger">
+                Experience is required
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <label class="form-label">Diploma:</label>
+              <input type="text" class="form-control" [(ngModel)]="selectedOffer.diploma" name="diploma" required #editDiploma="ngModel">
+              <div *ngIf="editDiploma.hasError('required') && editDiploma.touched" class="text-danger">
+                Diploma is required
+              </div>
+            </div>
+            <div class="col-md-6 mb-3">
+              <label class="form-label">Skills:</label>
+              <input type="text" class="form-control" [(ngModel)]="selectedOffer.skills" name="skills" required #editSkills="ngModel">
+              <div *ngIf="editSkills.hasError('required') && editSkills.touched" class="text-danger">
+                Skills are required
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <label class="form-label">Requirement:</label>
+              <input type="text"  class="form-control" [(ngModel)]="selectedOffer.requirement" name="requirement" required #editRequirement="ngModel">
+              <div *ngIf="editRequirement.hasError('required') && editRequirement.touched" class="text-danger">
+                Requirement is required
+              </div>
+            </div>
+            <div class="col-md-6 mb-3">
+              <label class="form-label">Contract Type:</label>
+              <select class="form-select" [(ngModel)]="selectedOffer.contractType" name="contractType" required>
+                <option value="" disabled>Select contract type</option>
+                <option *ngFor="let type of contractTypes" [value]="type">{{ type }}</option>
+              </select>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <label for="offreStatus" class="form-label">Offer Status:</label>
+              <select id="offreStatus" class="form-select" [(ngModel)]="selectedOffer.offreStatus" name="offreStatus" required>
+                <option value="" disabled>Select offer status</option>
+                <option *ngFor="let status of offreStatuses" [value]="status">{{ status }}</option>
+              </select>
+            </div>
+            <div class="col-md-6 mb-3">
+              <label for="createdAt" class="form-label">Created At:</label>
+              <input type="text" id="createdAt" class="form-control" [(ngModel)]="selectedOffer.createdAt" name="createdAt" disabled>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <label for="updatedAt" class="form-label">Updated At:</label>
+              <input type="text" id="updatedAt" class="form-control" [(ngModel)]="selectedOffer.updatedAt" name="updatedAt" disabled>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-primary" [disabled]="editOfferForm.invalid" (click)="updateOffer()">Update Offer</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- Modal Structure -->
+<div class="modal fade" id="applicationsListModal" tabindex="-1" aria-labelledby="applicationsListModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header bg-primary text-white">
+        <h5 class="modal-title" id="applicationsListModalLabel">Applications List</h5>
+        <button type="button" class="btn-close btn-light" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <!-- Table displaying the list of applications -->
+        <table class="table table-hover table-bordered">
+          <thead class="thead-dark">
+          <tr>
+            <th scope="col">Firstname</th>
+            <th scope="col">Lastname</th>
+            <th scope="col">CV</th>
+            <th scope="col">Motivational Letter</th>
+            <th scope="col">Status</th>
+            <th scope="col">Created At</th>
+            <th scope="col">Updated At</th>
+            <th scope="col">Action</th>
+          </tr>
+          </thead>
+          <tbody>
+          <!-- Loop through the applications array to create table rows -->
+          <tr *ngFor="let application of applications">
+            <td>{{ application.candidate.firstname }}</td>
+            <td>{{ application.candidate.lastname }}</td>
+            <td><button class="btn btn-primary btn-sm" (click)="getFileCV(application.applicationPK.idCandidate, application.applicationPK.idOffre)">Download CV</button></td>
+            <td><button class="btn btn-primary btn-sm" (click)="getFileMotivationalLetter(application.applicationPK.idCandidate, application.applicationPK.idOffre)">Download Letter</button></td>
+            <td>{{ application.applicationStatus }}</td>
+            <td>{{ application.createdAt | date:'short' }}</td>
+            <td>{{ application.updatedAt | date:'short' }}</td>
+            <td>
+              <button class="btn btn-danger btn-sm me-2" (click)="rejectApplication(application)">Reject</button>
+              <button class="btn btn-primary btn-sm" (click)="acceptApplication(application)">Accept</button>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,140 @@
+<div class="container">
+  <h1>Welcome {{currentUser.firstname}} {{currentUser.lastname}}</h1>
+  <p>You can apply to job openings</p>
+</div>
+
+<div class="container mt-5">
+  <div class="row">
+    <div class="col-md-8 offset-md-2">
+      <div *ngFor="let offer of offers" class="card mb-3">
+        <div class="card-header">
+          <h4>{{ offer.title }}</h4>
+        </div>
+        <div class="card-body">
+          <dl class="row">
+            <dt class="col-sm-3">Mission</dt>
+            <dd class="col-sm-9">{{ offer.mission }}</dd>
+
+            <dt class="col-sm-3">Experience</dt>
+            <dd class="col-sm-9">{{ offer.experience }}</dd>
+
+            <dt class="col-sm-3">Diploma</dt>
+            <dd class="col-sm-9">{{ offer.diploma }}</dd>
+
+            <dt class="col-sm-3">Skills</dt>
+            <dd class="col-sm-9">{{ offer.skills }}</dd>
+
+            <dt class="col-sm-3">Requirement</dt>
+            <dd class="col-sm-9">{{ offer.requirement }}</dd>
+
+            <dt class="col-sm-3">Contract Type</dt>
+            <dd class="col-sm-9">{{ offer.contractType }}</dd>
+
+            <dt class="col-sm-3">Status</dt>
+            <dd class="col-sm-9">{{ offer.offreStatus }}</dd>
+
+            <dt class="col-sm-3">Created At</dt>
+            <dd class="col-sm-9">{{ offer.createdAt | date:'short' }}</dd>
+
+            <dt class="col-sm-3">Updated At</dt>
+            <dd class="col-sm-9">{{ offer.updatedAt | date:'short' }}</dd>
+          </dl>
+          <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#fileUploadModal" *ngIf="offer.offreStatus === OffreStatus.OPEN && offer.hasApplied === false"
+           (click)="setSelectedOffer(offer)">Apply</button>&nbsp;&nbsp;
+          <button class="btn btn-outline-primary" *ngIf="offer.hasApplied" (click)="getMyApplication(offer.id)"
+                  data-bs-toggle="modal" data-bs-target="#applicationDetailsModal" (click)="setSelectedOffer(offer)">Application</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="modal fade" id="fileUploadModal" tabindex="-1" aria-labelledby="fileUploadModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="fileUploadModalLabel">Upload CV & Motivational Letter</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form #fileUploadForm="ngForm">
+          <div class="mb-3">
+            <label for="cvFile" class="form-label">CV</label>
+            <input
+              type="file"
+              id="cvFile"
+              class="form-control"
+              name="cvFile"
+              (change)="onCvFileChange($event)"
+              required
+              accept=".pdf"
+            />
+            <div *ngIf="cvFile === null " class="text-danger">
+              Please select a PDF file
+            </div>
+          </div>
+          <div class="mb-3">
+            <label for="motivationalLetterFile" class="form-label">Motivational Letter</label>
+            <input
+              type="file"
+              id="motivationalLetterFile"
+              class="form-control"
+              name="motivationalLetterFile"
+              (change)="onMotivationalFileChange($event)"
+              required
+              accept=".pdf"
+            />
+            <div *ngIf="motivationalLetterFile === null" class="text-danger">
+              Please select a PDF file
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" [disabled]="fileUploadForm.invalid || motivationalLetterFile === null || cvFile === null"
+         (click)="submitApplication()">
+          Upload</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="modal fade" id="applicationDetailsModal" tabindex="-1" aria-labelledby="applicationDetailsModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header bg-primary text-white">
+        <h5 class="modal-title" id="applicationDetailsModalLabel">Application Details</h5>
+        <button type="button" class="btn-close btn-light" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="row mb-3">
+          <div class="col-md-6">
+            <p><strong>CV:</strong></p>
+            <button class="btn btn-primary w-100" (click)="getFileCV(selectedOffer.id)">Download CV</button>
+          </div>
+          <div class="col-md-6">
+            <p><strong>Motivational Letter:</strong></p>
+            <button class="btn btn-primary w-100" (click)="getFileMotivationalLetter(selectedOffer.id)">Download Letter</button>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+            <p><strong>Status:</strong> {{ myApplication?.applicationStatus }}</p>
+          </div>
+          <div class="col-md-6">
+            <p><strong>Created At:</strong> {{ myApplication?.createdAt | date:'short' }}</p>
+            <p><strong>Updated At:</strong> {{ myApplication?.updatedAt | date:'short' }}</p>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-danger" (click)="deleteApplication()" *ngIf="myApplication?.applicationStatus === ApplicationStatus.PENDING">Delete</button>
+      </div>
+    </div>
+  </div>
+</div>
+

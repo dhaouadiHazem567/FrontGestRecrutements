@@ -1,0 +1,279 @@
+/* Styles pour le conteneur principal */
+.container {
+  margin-top: 20px;
+}
+
+/* Styles pour le titre de la page */
+h1 {
+  font-size: 2rem;
+  margin-bottom: 10px;
+}
+
+/* Styles pour les cartes d'offre */
+.card {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+}
+
+/* Styles pour les en-têtes des cartes */
+.card-header {
+  background-color: #4CAF50; /* Vert */
+  color: white;
+  border-bottom: 1px solid #ddd;
+  padding: 15px;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+}
+
+/* Styles pour le corps des cartes */
+.card-body {
+  padding: 20px;
+}
+
+/* Styles pour la liste de description */
+.dl dt {
+  font-weight: bold;
+}
+
+.dl dd {
+  margin-bottom: 10px;
+}
+
+/* Styles pour les boutons dans les cartes */
+.btn-primary {
+  background-color: #4CAF50; /* Vert */
+  border-color: #4CAF50;
+  color: white;
+  font-weight: bold;
+  padding: 10px 20px;
+  border-radius: 5px;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.btn-primary:hover {
+  background-color: #45a049; /* Vert plus foncé */
+  transform: translateY(-2px);
+}
+
+.btn-outline-primary {
+  border-color: #4CAF50;
+  color: #4CAF50;
+  font-weight: bold;
+  padding: 10px 20px;
+  border-radius: 5px;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.btn-outline-primary:hover {
+  background-color: #4CAF50; /* Vert */
+  color: white;
+  transform: translateY(-2px);
+}
+
+/* Espacement entre les boutons dans le footer du modal */
+.modal-footer .btn {
+  margin-left: 10px;
+}
+
+.btn-secondary {
+  background-color: #f0ad4e; /* Orange */
+  border-color: #f0ad4e;
+  color: white;
+  font-weight: bold;
+  padding: 10px 20px;
+  border-radius: 5px;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.btn-secondary:hover {
+  background-color: #ec971f; /* Orange plus foncé */
+  transform: translateY(-2px);
+}
+
+.btn-danger {
+  background-color: #d9534f; /* Rouge */
+  border-color: #d9534f;
+  color: white;
+  font-weight: bold;
+  padding: 10px 20px;
+  border-radius: 5px;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.btn-danger:hover {
+  background-color: #c9302c; /* Rouge plus foncé */
+  transform: translateY(-2px);
+}
+
+/* Styles pour les modaux */
+.modal-content {
+  border-radius: 8px;
+}
+
+.modal-header {
+  background-color: #4CAF50; /* Vert */
+  color: white;
+  border-bottom: 1px solid #ddd;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+}
+
+.modal-body {
+  padding: 20px;
+}
+
+.modal-footer {
+  border-top: 1px solid #ddd;
+}
+
+/* Styles spécifiques pour le header du modal Application Details */
+#applicationDetailsModal .modal-header {
+  background-color: #4CAF50; /* Vert, comme les autres modaux */
+  color: white;
+}
+
+#applicationDetailsModal .btn-close.btn-light {
+  color: white;
+  opacity: 0.5;
+}
+
+/* Styles pour les boutons dans les modaux */
+.btn-primary {
+  background-color: #4CAF50; /* Vert */
+  border-color: #4CAF50;
+  color: white;
+  font-weight: bold;
+  padding: 10px 20px;
+  border-radius: 5px;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.btn-primary:hover {
+  background-color: #45a049; /* Vert plus foncé */
+  transform: translateY(-2px);
+}
+
+.btn-outline-primary {
+  border-color: #4CAF50;
+  color: #4CAF50;
+  font-weight: bold;
+  padding: 10px 20px;
+  border-radius: 5px;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.btn-outline-primary:hover {
+  background-color: #4CAF50; /* Vert */
+  color: white;
+  transform: translateY(-2px);
+}
+
+.btn-secondary {
+  background-color: #f0ad4e; /* Orange */
+  border-color: #f0ad4e;
+  color: white;
+  font-weight: bold;
+  padding: 10px 20px;
+  border-radius: 5px;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.btn-secondary:hover {
+  background-color: #ec971f; /* Orange plus foncé */
+  transform: translateY(-2px);
+}
+
+.btn-danger {
+  background-color: #d9534f; /* Rouge */
+  border-color: #d9534f;
+  color: white;
+  font-weight: bold;
+  padding: 10px 20px;
+  border-radius: 5px;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.btn-danger:hover {
+  background-color: #c9302c; /* Rouge plus foncé */
+  transform: translateY(-2px);
+}
+
+
+/* Styles pour les champs de formulaire dans les modaux */
+form {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-label {
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.form-control,
+.form-select {
+  border-radius: 5px;
+  border: 1px solid #ced4da; /* Bordure neutre */
+}
+
+.form-control:focus,
+.form-select:focus {
+  border-color: #4CAF50; /* Bordure verte au focus */
+  box-shadow: 0 0 0 0.2rem rgba(76, 175, 80, 0.25); /* Ombre verte au focus */
+}
+
+/* Styles pour les messages d'erreur */
+.text-danger {
+  font-size: 0.875rem; /* Taille de police réduite */
+  color: #dc3545; /* Rouge pour les messages d'erreur */
+}
+
+/* Styles pour les champs désactivés */
+input[disabled] {
+  background-color: #e9ecef; /* Couleur de fond pour les champs désactivés */
+}
+
+/* Styles pour les tables */
+.p-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.p-table th, .p-table td {
+  padding: 10px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+.p-table th {
+  background-color: #f9f9f9;
+}
+
+.p-inputgroup {
+  display: flex;
+  align-items: center;
+}
+
+.p-inputgroup-addon {
+  background-color: #f0f0f0;
+  border: 1px solid #ddd;
+  border-radius: 5px 0 0 5px;
+  padding: 10px;
+}
+
+.p-inputgroup input {
+  border-radius: 0 5px 5px 0;
+}
+
+/* Styles spécifiques pour le header du modal Application Details */
+#applicationDetailsModal .modal-header {
+  background-color: #4CAF50 !important; /* Vert, comme les autres modaux */
+  color: white !important;
+}
+
+#applicationDetailsModal .btn-close.btn-light {
+  color: white !important;
+  opacity: 0.5 !important;
+}

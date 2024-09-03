@@ -1,0 +1,171 @@
+/* Styles pour la carte d'offre */
+.card {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin-bottom: 1rem;
+}
+
+.card-header {
+  background-color: #4CAF50; /* Vert */
+  color: white;
+  border-bottom: 1px solid #ddd;
+  padding: 15px;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+}
+
+.card-body {
+  padding: 20px;
+}
+
+/* Styles pour les éléments de la liste de description */
+.dl dt {
+  font-weight: bold;
+}
+
+.dl dd {
+  margin-bottom: 10px;
+}
+
+/* Styles pour les boutons dans le footer des modaux */
+
+/* Styles pour le bouton Close */
+.btn-secondary {
+  background-color: #f0ad4e; /* Orange */
+  border-color: #f0ad4e;
+  color: white;
+  font-weight: bold;
+  padding: 10px 20px;
+  border-radius: 5px;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.btn-secondary:hover {
+  background-color: #ec971f; /* Orange plus foncé */
+  transform: translateY(-2px);
+}
+
+/* Styles pour le bouton Reset */
+.btn-danger {
+  background-color: #d9534f; /* Rouge */
+  border-color: #d9534f;
+  color: white;
+  font-weight: bold;
+  padding: 10px 20px;
+  border-radius: 5px;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.btn-danger:hover {
+  background-color: #c9302c; /* Rouge plus foncé */
+  transform: translateY(-2px);
+}
+
+/* Styles pour le bouton Update Offer */
+.btn-primary {
+  background-color: #4CAF50; /* Vert */
+  border-color: #4CAF50;
+  color: white;
+  font-weight: bold;
+  padding: 10px 20px;
+  border-radius: 5px;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.btn-primary:hover {
+  background-color: #45a049; /* Vert plus foncé */
+  transform: translateY(-2px);
+}
+
+/* Styles pour les champs de formulaire */
+.form-label {
+  font-weight: bold;
+}
+
+.form-control {
+  border-radius: 5px;
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.form-select {
+  border-radius: 5px;
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+/* Styles pour les modaux */
+.modal-content {
+  border-radius: 8px;
+}
+
+.modal-header {
+  background-color: #4CAF50; /* Vert */
+  color: white;
+  border-bottom: 1px solid #ddd;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+}
+
+.modal-body {
+  padding: 20px;
+}
+
+.modal-footer {
+  border-top: 1px solid #ddd;
+}
+
+/* Assure que le modal occupe une largeur appropriée */
+#applicationsListModal .modal-dialog {
+  max-width: 90%; /* Ajuste la largeur maximale du modal */
+}
+
+/* Assure que le contenu du modal est correctement stylisé */
+#applicationsListModal .modal-content {
+  overflow-x: auto; /* Ajoute une barre de défilement horizontale si nécessaire */
+}
+
+/* Style pour l'en-tête du modal */
+#applicationsListModal .modal-header {
+  background-color: #4CAF50 !important;* /* Couleur de fond verte pour l'en-tête du modal (comme btn-primary) */
+  color: #fff; /* Couleur du texte en blanc pour le contraste */
+  border-bottom: 1px solid #ddd; /* Bordure inférieure pour l'en-tête du modal */
+}
+
+/* Style pour le corps du modal */
+#applicationsListModal .modal-body {
+  padding: 1rem; /* Ajuste le padding pour un meilleur espacement */
+}
+
+/* Style spécifique pour le tableau dans le modal */
+#applicationsListModal .table {
+  width: 100%; /* Assure que le tableau occupe toute la largeur disponible dans le modal */
+  border-collapse: collapse; /* Fusionne les bordures pour un aspect épuré */
+}
+
+#applicationsListModal .table thead th {
+  background-color: #f5f5f5; /* Couleur de fond claire pour l'en-tête du tableau */
+  color: #333; /* Couleur du texte dans l'en-tête du tableau */
+  text-align: center; /* Centre le texte dans l'en-tête du tableau */
+  padding: 0.75rem;
+  border-bottom: 1px solid #ddd; /* Bordure inférieure pour l'en-tête du tableau */
+}
+
+#applicationsListModal .table tbody tr {
+  border-bottom: 1px solid #ddd; /* Bordure inférieure des lignes du tableau */
+}
+
+#applicationsListModal .table tbody td {
+  padding: 0.75rem;
+  color: #333; /* Couleur du texte des cellules du tableau */
+  text-align: center; /* Centre le texte horizontalement dans les cellules du tableau */
+  vertical-align: middle; /* Centre le texte verticalement dans les cellules du tableau */
+}
+
+
+#applicationsListModal .table tbody tr:nth-child(odd) {
+  background-color: #fafafa; /* Couleur d'arrière-plan des lignes impaires du tableau */
+}
+
+#applicationsListModal .table tbody tr:hover {
+  background-color: #e9ecef; /* Couleur d'arrière-plan lors du survol des lignes du tableau */
+}

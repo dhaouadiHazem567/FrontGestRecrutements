@@ -1,0 +1,29 @@
+<div class="container d-flex justify-content-center align-items-center min-vh-100">
+  <div class="row justify-content-center">
+    <div class="col-12">
+      <div class="card shadow-lg p-5 custom-card">
+        <div class="card-body">
+          <h3 class="card-title text-center mb-4">Reset Password</h3>
+          <form #myForm="ngForm">
+            <div class="mb-4">
+              <label for="code" class="form-label">Code:</label>
+              <input type="number" id="code" class="form-control" [(ngModel)]="userCode" name="code" #code="ngModel" required pattern="^[0-9]{8}$">
+              <div *ngIf="code.hasError('required') && code.touched" class="text-danger">
+                Code is required
+              </div>
+              <div *ngIf="code.hasError('pattern') && code.touched" class="text-danger">Code must be exactly 8 digits</div>
+            </div>
+
+            <div class="d-grid">
+              <button type="submit" class="btn btn-primary btn-lg" [disabled]="myForm.invalid" (click)="enterCode()">Submit</button>
+            </div>
+
+            <div class="d-grid mt-3">
+              <button type="button" class="btn btn-danger" routerLink="/authentication">Return</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

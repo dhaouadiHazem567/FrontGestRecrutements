@@ -1,0 +1,6 @@
+export enum RoleName {
+
+  ROLE_ADMIN = 'ROLE_ADMIN',
+  ROLE_HR_MANGER = 'ROLE_HR_MANAGER',
+  ROLE_CANDIDATE = 'ROLE_CANDIDATE'
+}
